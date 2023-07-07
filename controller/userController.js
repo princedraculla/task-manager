@@ -64,6 +64,25 @@ const addAdmin = async (req, res) => {
   }
 };
 
+
+const changeRole = async (req,res) => {
+  const { role } = req.body;
+  try {
+    const changedRole = await prisma.user.update({
+      where: {
+        id: Number(req.params.id)
+      },
+      data: {
+        role: role
+      }
+    });
+    res.status(200).json(changedRole)
+  } catch (error) {
+    res.status(400).json({ msg: error.message })
+  }
+}
+
+
 const findAllUser = async (req, res) => {
   try {
     const allUsers = await prisma.user.findMany();
@@ -93,4 +112,5 @@ module.exports = {
   findAllUser,
   findUserById,
   addAdmin,
+  changeRole
 };

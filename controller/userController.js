@@ -1,5 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const prisma = require('../prisma/client')
 
 const addUser = async (req, res) => {
   const { name, email } = req.body;
@@ -105,6 +104,8 @@ const findUserById = async (req, res) => {
   }
 };
 
+
+
 module.exports = {
   addUser,
   updateUser,
@@ -112,5 +113,5 @@ module.exports = {
   findAllUser,
   findUserById,
   addAdmin,
-  changeRole
+  changeRole,
 };

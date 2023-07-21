@@ -3,7 +3,7 @@ const router = express.Router();
 const { addUser, updateUser, deleteUser, findAllUser,
      findUserById, addAdmin, changeRole } = require("../controller/userController");
 
-const { createPost } = require('../controller/postController')
+const { createPost, showAllPosts } = require('../controller/postController')
 
 
 router.post('/add-admin', addAdmin);
@@ -15,7 +15,8 @@ router.delete('/user/:id', deleteUser);
 router.patch('/user/role/:id', changeRole)
 
 
-router.post('/user/post/add/:id', createPost)
+router.post('/user/post/add', createPost)
+router.get('/user/post/all', showAllPosts)
 
 
 module.exports = router;

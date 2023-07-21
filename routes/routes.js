@@ -3,7 +3,7 @@ const router = express.Router();
 const { addUser, updateUser, deleteUser, findAllUser,
      findUserById, addAdmin, changeRole } = require("../controller/userController");
 
-const { createPost, showAllPosts } = require('../controller/postController')
+const { createPost, showAllPosts, updateAllPost, updatePost } = require('../controller/postController')
 
 
 router.post('/add-admin', addAdmin);
@@ -17,6 +17,8 @@ router.patch('/user/role/:id', changeRole)
 
 router.post('/user/post/add', createPost)
 router.get('/user/post/all', showAllPosts)
+router.put('/user/post/update/all/:id', updateAllPost)
+router.patch('/user/post/update/:id', updatePost)
 
 
 module.exports = router;

@@ -32,6 +32,32 @@ const createPost = async (req, res) => {
   }
 };
 
+const deleteOnePostUser = async (req, res) => {
+  const { postId } = req.body;
+  try {
+    const post = await prisma.post.findFirst({
+      where: {
+        id: Number(postId),
+        authorId: Number(req.params.id),
+      },
+    });
+
+    if (!post) {
+      res.status(404).send("post not found or not owned by user");
+      return;
+    }
+
+    const result = await prisma.post.delete({
+      where: {
+        id: Number(postId),
+      },
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+};
+
 const updateAllPost = async (req, res) => {
   const { authorId, title, content } = req.body;
   try {
@@ -55,25 +81,25 @@ const updatePost = async (req, res) => {
   try {
     const result = await prisma.user.update({
       where: {
-        id: Number(authorId)
+        id: Number(authorId),
       },
-      data:{
-        Post:{
+      data: {
+        Post: {
           update: {
-            where:{
-              id: Number(postId)
+            where: {
+              id: Number(postId),
             },
             data: {
               title: newTitle,
-              content: newContent
-            }
-          }
-        }
+              content: newContent,
+            },
+          },
+        },
       },
       include: {
-        Post: true
-      }
-    })
+        Post: true,
+      },
+    });
     res.status(200).json(result);
   } catch (error) {
     res.status(400).json({ msg: error.message });
@@ -85,4 +111,5 @@ module.exports = {
   showAllPosts,
   updateAllPost,
   updatePost,
+  deleteOnePostUser,
 };

@@ -2,10 +2,14 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const express = require('express')
 const router = express.Router();
-const prisma = require('../prisma/client')
+const prisma = require('../prisma/cient')
+const authcontroller = require('../controller/authController')
 
 
 //user registration
+
+
+router.get('/signup', authcontroller.signup_get);
 
 router.post('/register', async(req, res) => {
     try {
@@ -31,3 +35,6 @@ router.post('/register', async(req, res) => {
 router.post('/login', async (req, res) => {
     trt
 })
+
+
+module.exports = router

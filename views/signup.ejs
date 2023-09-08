@@ -10,6 +10,17 @@
   <input type="email" name="email" required />
   <div class="email error"></div>
   <button>Sign Up</button>
-</form>/
+</form>
+
+<script>
+  const form = document.querySelector('form');
+  form.addEventListener('submit', (event) =>{
+    event.preventDefault()
+
+    const name = form.name.value;
+    const email = form.email.value;
+    console.log(name,email)
+  });
+</script>
 
 <%- include('partials/footer.ejs')  -%>

@@ -26,3 +26,4 @@ connection.connect((err) => {
   console.log("database is connected");
 });
 app.use(authRoutse);
+app.get('/', (req,res) => {res.render('home')})

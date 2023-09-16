@@ -4,7 +4,25 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config()
 
 
+// error handler for validation
 
+
+const handelErrors = (err) => {
+  console.log(err.message, err.code);
+  let errors = {name: '', email: ''}
+
+  //duplicate error
+  if(err.code === 11000){
+    errors.email = 'that email already used';
+    return errors
+  };
+  if(err.message.includes('user validation failed')){
+    Object.values(err.errors).forEach(({properties}) => {
+      errors[properties.path] = properties.message;
+    });
+  }
+  return errors
+}
 
 //creating function for token
 
@@ -47,7 +65,8 @@ module.exports.register = async (req, res) => {
       data: name
     })
   } catch (error) {
-    res.status(400).json({message: error.message})
+      const errors  = handelErrors(error);
+      res.status(400).json({ errors })
   }
 };
 

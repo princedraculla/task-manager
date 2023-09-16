@@ -1,11 +1,25 @@
 const prisma = require("../prisma/client");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+require('dotenv').config()
+
+
+
+
+//creating function for token
+
+const creatingToken = (id) => {
+  return jwt.sign({ id }, process.env.SECRET_JWT, {
+    expiresIn:  60 * 60 * 24 * 5
+  })
+}
+
 
 module.exports.register = async (req, res) => {
   try {
     const user = await prisma.user.findFirst({
       where: {
-        email: req.body.email,
+        name: req.body.name,
       },
     });
     if (user) {
@@ -24,6 +38,9 @@ module.exports.register = async (req, res) => {
         email: hashedEmail
       },
     });
+
+    const token = creatingToken(createUser.id)
+    res.cookie('jwt',token, {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 5})
     res.status(200).send({
       status: "success",
       message: "user registered",

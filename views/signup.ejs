@@ -12,6 +12,7 @@
   <button>Sign Up</button>
 </form>
 
+<%- include('partials/footer.ejs') -%>
 <script>
   const form = document.querySelector("form");
   form.addEventListener("submit", async (event) => {
@@ -23,7 +24,7 @@
     try {
       const result = await fetch("/register", {
         method: "POST",
-        body: JSON.stringify({ name: name, emai: email }),
+        body: JSON.stringify({  name,  email }),
         headers: { "Content-Type": "application/json" },
       });
       console.log(result);
@@ -32,5 +33,3 @@
     }
   });
 </script>
-
-<%- include('partials/footer.ejs') -%>

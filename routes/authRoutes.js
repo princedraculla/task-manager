@@ -8,10 +8,12 @@ const {check} = require('express-validator')
 
 //user registration
 
-
+router.get('/signup', (req,res) => {
+    res.render('signup')
+})
 router.post('/register', validate([
     check('name').not().isEmpty().withMessage('username is required!'),
-    check('email').isEmail().not().isEmpty().withMessage('pleas enter the correct email!')
+    check('email').not().isEmpty().isEmail().withMessage('pleas enter the correct email!')
 ]) ,authcontroller.register);
 router.get('/login', authcontroller.login_get);
 

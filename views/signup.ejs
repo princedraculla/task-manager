@@ -15,17 +15,11 @@
 <%- include('partials/footer.ejs') -%>
 <script>
   const form = document.querySelector("form");
-  const emailError = document.querySelector(".email.error")
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const name = form.name.value;
     const email = form.email.value;
-
-    // reset errors
-    emailError.textContent = '';
-
-    
 
     try {
       const result = await fetch("/register", {
@@ -33,14 +27,7 @@
         body: JSON.stringify({ name, email }),
         headers: { "Content-Type": "application/json" },
       });
-      const data = await result.json()
-      
-      if(data.errors){
-        emailError.textContent = data.errors.email;
-      }
-      if(data.user) {
-        location.assign('/')
-      }
+      location.assign('/')
     } catch (error) {
       console.log(error);
     }
